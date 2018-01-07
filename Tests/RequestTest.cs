@@ -2,6 +2,7 @@
 {
 	using System;
 	using System.Collections.Generic;
+	using FluentAssertions;
 	using NUnit.Framework;
 	using Services;
 	using Services.Metadata;
@@ -108,6 +109,83 @@
 			var requestData = request.PrepareRequestData();
 			var renderer = new JsonBodyTreeRenderer();
 			var body = renderer.Render(requestData.Body);
+			body.Should().BeEquivalentTo(@"{
+  'subject': 'hello world',
+  'defValueTest': 'defValue',
+  'simpleObj': {
+    'simleObjName': 'testSimpleObjName',
+    'simleObjAge': 12
+  },
+  'simpleArray': [
+    1,
+    2,
+    3
+  ],
+  'simpleObjectArray': [
+    {
+      'start': '2018-01-07',
+      'end': '2018-01'
+    },
+    {
+      'start': '2018-01-09',
+      'end': '2018-01'
+    }
+  ],
+  'nestedObjArray': [
+    {
+      'name': 'ArrayObject1',
+      'items': [
+        {
+          'itemName': 'item1'
+        },
+        {
+          'itemName': 'item2'
+        }
+      ]
+    },
+    {
+      'name': 'ArrayObject2',
+      'items': [
+        {
+          'itemName': 'item3'
+        },
+        {
+          'itemName': 'item4'
+        },
+        {
+          'itemName': 'item5'
+        }
+      ]
+    }
+  ],
+  'wellKnownTypes': [
+    {
+      'name': 'ArrayObject1',
+      'items': [
+        {
+          'itemName': 'item1'
+        },
+        {
+          'itemName': 'item2'
+        }
+      ]
+    },
+    {
+      'name': 'ArrayObject2',
+      'items': [
+        {
+          'itemName': 'item3'
+        },
+        {
+          'itemName': 'item4'
+        },
+        {
+          'itemName': 'item5'
+        }
+      ]
+    }
+  ]
+}".Replace("'", "\""));
 		}
 
 
